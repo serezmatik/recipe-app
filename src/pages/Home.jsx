@@ -1,15 +1,19 @@
 import Veggie from "../components/Veggie";
 import Item from "../components/Item";
-
+import { motion } from "framer-motion"
 
 import React from 'react'
 
 function Home() {
   return (
-    <div>
-      <Veggie/>
-      <Item/>
-    </div>
+    <motion.div
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.7 }}>
+      <Veggie />
+      <Item />
+    </motion.div>
   )
 }
 
