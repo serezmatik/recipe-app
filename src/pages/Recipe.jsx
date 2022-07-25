@@ -1,9 +1,16 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
-import { useParams } from 'react-router-dom'
-import { motion } from "framer-motion"
+import {useParams} from 'react-router-dom'
+import {motion} from "framer-motion"
+import React, {useContext} from "react";
+import {GlobalContext} from "../context/GlobalState";
 
 function Recipe() {
+    const {AddRecipeToFavourites} = useContext(GlobalContext)
+
+
+
+
     let params = useParams();
     const [details, setDetails] = useState({})
     const [activeTab, setActiveTab] = useState('instructions')
@@ -13,25 +20,33 @@ function Recipe() {
         setDetails(detailData)
     }
     useEffect(() => {
+
         fetchDetails()
     }, [params.name])
     return (
         <DetailWrapper
-            animate={{ opacity: 1 }}
-            initial={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.7 }}
+            animate={{opacity: 1}}
+            initial={{opacity: 0}}
+            exit={{opacity: 0}}
+            transition={{duration: 0.7}}
         >
             <div><h2>{details.title}</h2>
-                <img src={details.image} />
+                <img src={details.image}/>
             </div>
             <Info>
-                <Button className={activeTab === 'instructions' ? 'active' : ''} onClick={() => setActiveTab('instructions')}>Instructions</Button>
-                <Button className={activeTab === 'ingredients' ? 'active' : ''} onClick={() => setActiveTab('ingredients')}>Ingredients</Button>
+                <Button className={activeTab === 'instructions' ? 'active' : ''}
+                        onClick={() => setActiveTab('instructions')}>Instructions</Button>
+                <Button className={activeTab === 'ingredients' ? 'active' : ''}
+                        onClick={() => setActiveTab('ingredients')}>Ingredients</Button>
+                <Button
+
+                    onClick={() => AddRecipeToFavourites (params.name)}>
+                    Add to favorites
+                </Button>
                 {activeTab === 'instructions' && (
                     <div>
-                        <h3 dangerouslySetInnerHTML={{ __html: details.summary }}></h3>
-                        <h3 dangerouslySetInnerHTML={{ __html: details.instructions }}></h3>
+                        <h3 dangerouslySetInnerHTML={{__html: details.summary}}></h3>
+                        <h3 dangerouslySetInnerHTML={{__html: details.instructions}}></h3>
                     </div>
                 )}
                 {activeTab === 'ingredients' && (
